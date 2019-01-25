@@ -563,6 +563,7 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
                      @"star"  : [MTMathAtom atomWithType:kMTMathAtomBinaryOperator value:@"\u22C6"],
                      @"cdot"  : [MTMathAtom atomWithType:kMTMathAtomBinaryOperator value:@"\u22C5"],
                      @"amalg" : [MTMathAtom atomWithType:kMTMathAtomBinaryOperator value:@"\u2A3F"],
+                     @"bmod"  : [MTMathAtom atomWithType:kMTMathAtomBinaryOperator value:@"mod"],
                      
                      // No limit operators
                      @"log" : [MTMathAtomFactory operatorWithName:@"log" limits:NO],
@@ -587,7 +588,8 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
                      @"hom" : [MTMathAtomFactory operatorWithName:@"hom" limits:NO],
                      @"exp" : [MTMathAtomFactory operatorWithName:@"exp" limits:NO],
                      @"deg" : [MTMathAtomFactory operatorWithName:@"deg" limits:NO],
-                     
+                     @"mod" : [MTMathAtomFactory operatorWithName:@"mod" limits:NO],
+
                      // Limit operators
                      @"lim" : [MTMathAtomFactory operatorWithName:@"lim" limits:YES],
                      @"limsup" : [MTMathAtomFactory operatorWithName:@"lim sup" limits:YES],

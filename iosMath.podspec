@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "iosMath"
-  s.version      = "0.10.0"
+  s.version      = "0.11.0"
   s.summary      = "Math equation rendering for iOS and OS X"
   s.description  = "iosMath fork"
   s.homepage     = "https://github.com/hahtml/iosMath.git"

@@ -1,4 +1,6 @@
 ## Changelog
+### v0.11.0 (2020-08-02)
+* Update the iOS math lib merge from https://github.com/hahtml/iosMath.git
 
 ### v0.10.0 (2019-09-06)
 * Add MTInnerDisplay (#126)

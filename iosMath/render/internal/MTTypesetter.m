@@ -211,12 +211,12 @@ UTF32Char getDefaultStyle(unichar ch) {
         // . is treated as a number in our code, but it doesn't change fonts.
         return ch;
     }
-//    else {
-////        @throw [NSException exceptionWithName:@"IllegalCharacter"
-////                                       reason:[NSString stringWithFormat:@"Unknown character %d for default style.", ch]
-////                                     userInfo:nil];
-//        return ch;
-//    }
+    //    else {
+    ////        @throw [NSException exceptionWithName:@"IllegalCharacter"
+    ////                                       reason:[NSString stringWithFormat:@"Unknown character %d for default style.", ch]
+    ////                                     userInfo:nil];
+    //        return ch;
+    //    }
     return ch;
 }
 
@@ -709,7 +709,7 @@ static void getBboxDetails(CGRect bbox, CGFloat* ascent, CGFloat* descent)
                 }
                 [self addInterElementSpace:prevNode currentType:atom.type];
                 MTInner* inner = (MTInner*) atom;
-              MTInnerDisplay* display = [self makeInner:inner atIndex:atom.indexRange.location];
+                MTInnerDisplay* display = [self makeInner:inner atIndex:atom.indexRange.location];
                 display.position = _currentPosition;
                 _currentPosition.x += display.width;
                 [_displayAtoms addObject:display];
@@ -926,8 +926,12 @@ static void getBboxDetails(CGRect bbox, CGFloat* ascent, CGFloat* descent)
     NSArray* spaceArray = getInterElementSpaces()[leftIndex];
     NSNumber* spaceTypeObj = spaceArray[rightIndex];
     MTInterElementSpaceType spaceType = spaceTypeObj.intValue;
-    NSAssert(spaceType != kMTSpaceInvalid, @"Invalid space between %lu and %lu", (unsigned long)left, (unsigned long)right);
     
+    //disable error space between lu lu
+    //    NSAssert(spaceType != kMTSpaceInvalid, @"Invalid space between %lu and %lu", (unsigned long)left, (unsigned long)right);
+    if(spaceType != kMTSpaceInvalid){
+        return 0;
+    };
     int spaceMultipler = [self getSpacingInMu:spaceType];
     if (spaceMultipler > 0) {
         // 1 em = size of font in pt. space multipler is in multiples mu or 1/18 em
@@ -1823,37 +1827,37 @@ static const NSInteger kDelimiterShortfallPoints = 5;
 
 - (MTInnerDisplay*) makeInner:(MTInner*) inner atIndex:(NSUInteger) index
 {
-  NSAssert(inner.leftBoundary || inner.rightBoundary, @"Inner should have a boundary to call this function");
-  
-  MTMathListDisplay* innerListDisplay = [MTTypesetter createLineForMathList:inner.innerList font:_font style:_style cramped:_cramped];
-  CGFloat axisHeight = _styleFont.mathTable.axisHeight;
-  // delta is the max distance from the axis
-  CGFloat delta = MAX(innerListDisplay.ascent - axisHeight, innerListDisplay.descent + axisHeight);
-  CGFloat d1 = (delta / 500) * kDelimiterFactor;  // This represents atleast 90% of the formula
-  CGFloat d2 = 2 * delta - kDelimiterShortfallPoints;  // This represents a shortfall of 5pt
-  // The size of the delimiter glyph should cover at least 90% of the formula or
-  // be at most 5pt short.
-  CGFloat glyphHeight = MAX(d1, d2);
-  
-  MTDisplay* leftDelimiter = nil;
-  if (inner.leftBoundary && inner.leftBoundary.nucleus.length > 0) {
-    MTDisplay* leftGlyph = [self findGlyphForBoundary:inner.leftBoundary.nucleus withHeight:glyphHeight];
-    if (leftGlyph) {
-      leftDelimiter = leftGlyph;
+    NSAssert(inner.leftBoundary || inner.rightBoundary, @"Inner should have a boundary to call this function");
+    
+    MTMathListDisplay* innerListDisplay = [MTTypesetter createLineForMathList:inner.innerList font:_font style:_style cramped:_cramped];
+    CGFloat axisHeight = _styleFont.mathTable.axisHeight;
+    // delta is the max distance from the axis
+    CGFloat delta = MAX(innerListDisplay.ascent - axisHeight, innerListDisplay.descent + axisHeight);
+    CGFloat d1 = (delta / 500) * kDelimiterFactor;  // This represents atleast 90% of the formula
+    CGFloat d2 = 2 * delta - kDelimiterShortfallPoints;  // This represents a shortfall of 5pt
+    // The size of the delimiter glyph should cover at least 90% of the formula or
+    // be at most 5pt short.
+    CGFloat glyphHeight = MAX(d1, d2);
+    
+    MTDisplay* leftDelimiter = nil;
+    if (inner.leftBoundary && inner.leftBoundary.nucleus.length > 0) {
+        MTDisplay* leftGlyph = [self findGlyphForBoundary:inner.leftBoundary.nucleus withHeight:glyphHeight];
+        if (leftGlyph) {
+            leftDelimiter = leftGlyph;
+        }
     }
-  }
-  
-  MTDisplay* rightDelimiter = nil;
-  if (inner.rightBoundary && inner.rightBoundary.nucleus.length > 0) {
-    MTDisplay* rightGlyph = [self findGlyphForBoundary:inner.rightBoundary.nucleus withHeight:glyphHeight];
-    if (rightGlyph) {
-      rightDelimiter = rightGlyph;
+    
+    MTDisplay* rightDelimiter = nil;
+    if (inner.rightBoundary && inner.rightBoundary.nucleus.length > 0) {
+        MTDisplay* rightGlyph = [self findGlyphForBoundary:inner.rightBoundary.nucleus withHeight:glyphHeight];
+        if (rightGlyph) {
+            rightDelimiter = rightGlyph;
+        }
     }
-  }
-
-  MTInnerDisplay* innerDisplay = [[MTInnerDisplay alloc] initWithInner:innerListDisplay leftDelimiter:leftDelimiter rightDelimiter:rightDelimiter atIndex: index];
-  
-  return innerDisplay;
+    
+    MTInnerDisplay* innerDisplay = [[MTInnerDisplay alloc] initWithInner:innerListDisplay leftDelimiter:leftDelimiter rightDelimiter:rightDelimiter atIndex: index];
+    
+    return innerDisplay;
 }
 
 @end

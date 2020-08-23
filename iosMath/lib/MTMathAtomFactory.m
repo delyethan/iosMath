@@ -79,7 +79,7 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
 + (nullable MTMathAtom *)atomForCharacter:(unichar)ch
 {
     NSString *chStr = [NSString stringWithCharacters:&ch length:1];
-    NSLog(@"%d",ch);
+    // NSLog(@"%d",ch);
     if (ch > 0x0410 && ch < 0x044F){
         // show basic cyrillic alphabet. Latin Modern Math font is not good for cyrillic symbols
         return [MTMathAtom atomWithType:kMTMathAtomOrdinary value:chStr];
@@ -115,7 +115,7 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
         return [MTMathAtom atomWithType:kMTMathAtomVariable value:chStr];
     } else if (ch < 0x21 || ch > 0x7E) {
         // skip non ascii characters and spaces
-        NSLog(@"%d",ch);
+        // NSLog(@"%d",ch);
         return nil;
     }else {
         NSAssert(false, @"Unknown ascii character %@. Should have been accounted for.", @(ch));

@@ -506,7 +506,7 @@ NSString *const MTParseError = @"ParseError";
         mathColorbox.colorString = [self readColor];
         mathColorbox.innerList = [self buildInternal:true];
         return mathColorbox;
-    } else if ([command isEqualToString:@"stackrel"]) {
+    } else if ([command isEqualToString:@"stackrel"] || [command isEqualToString:@"overset"]) {
         MTMathList* top = [self buildInternal:YES];
         MTMathList* bottom = [self buildInternal:YES];
         MTLargeOperator* stack = [[MTStackRel alloc] initWithBottom:bottom.stringValue andTop:top];

@@ -83,7 +83,7 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
     if (ch > 0x0410 && ch < 0x044F){
         // show basic cyrillic alphabet. Latin Modern Math font is not good for cyrillic symbols
         return [MTMathAtom atomWithType:kMTMathAtomOrdinary value:chStr];
-    } else if (ch == '"' || ch == '/' || ch == '@' || ch == '`' || ch == '|' || (ch >= 0x2016 && ch <= 0x201F)) {
+    } else if (ch == 0x0027 || ch == '"' || ch == '/' || ch == '@' || ch == '`' || ch == '|' || (ch >= 0x2016 && ch <= 0x201F)) {
         // just an ordinary character. The following are allowed ordinary chars
         // | / ` @ "
         return [MTMathAtom atomWithType:kMTMathAtomOrdinary value:chStr];
